@@ -1,0 +1,403 @@
+﻿<Window x:Class="Kurosvaya.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kurosvaya"
+        mc:Ignorable="d"
+        
+        Title="DataBase DJ" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:Dj_DS x:Key="dj_DS"/>
+        <CollectionViewSource x:Key="empViewSource" Source="{Binding emp, Source={StaticResource dj_DS}}"/>
+        <CollectionViewSource x:Key="pstionsViewSource" Source="{Binding pstions, Source={StaticResource dj_DS}}"/>
+        <CollectionViewSource x:Key="gnrsViewSource" Source="{Binding gnrs, Source={StaticResource dj_DS}}"/>
+        <CollectionViewSource x:Key="cmpstnViewSource" Source="{Binding cmpstn, Source={StaticResource dj_DS}}"/>
+        <CollectionViewSource x:Key="mscnViewSource" Source="{Binding mscn, Source={StaticResource dj_DS}}"/>
+        <CollectionViewSource x:Key="schdlViewSource" Source="{Binding schdl, Source={StaticResource dj_DS}}"/>
+    </Window.Resources>
+    <Grid>
+        <TabControl HorizontalAlignment="Left" Height="419" VerticalAlignment="Top" Width="792" x:Name="MainTab">
+            <TabItem Header="Таблицы" x:Name="Tab_Tab">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl HorizontalAlignment="Left" Height="419" VerticalAlignment="Top" Width="792" x:Name="Child_Tab_Tab" SelectionChanged="Child_Tab_Tab_SelectionChanged">
+                        <TabItem x:Name="employe" Header="Сотрудники">
+                            <Grid x:Name="employe_grid" Background="#FFE5E5E5" DataContext="{StaticResource empViewSource}">
+                                <ListView x:Name="empListView" ItemsSource="{Binding}" Margin="0,0,0,59" SelectionMode="Single">
+                                    <ListView.ItemContainerStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="id_empColumn" Header="Код сотрудника" Width="100">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="6,-1,-6,-1" Text="{Binding id_emp, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="fnColumn" Header="ФИО" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding fn, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="ageColumn" Header="Возраст" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding age, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="sexColumn" Header="Пол" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox IsChecked="{Binding sex, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-6,-1"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="adrsColumn" Header="Адрес" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding adrs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="nmbrColumn" Header="Номер" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding nmbr, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="psprt_nmbrColumn" Header="Паспортные данные" Width="120">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1"  Text="{Binding psprt_nmbr, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="id_pstionColumn" Header="Должность" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" DataContext="{StaticResource pstionsViewSource}" Text="{Binding pstion_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="pstions" Header="Должности">
+                            <Grid x:Name="pstions_grid" Background="#FFE5E5E5" DataContext="{StaticResource pstionsViewSource}">
+                                <ListView x:Name="pstionsListView" ItemsSource="{Binding}" Margin="0,0,0,55" SelectionMode="Single">
+                                    <ListView.ItemContainerStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="id_pstionColumn1" Header="Код должности" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="6,-1,-6,-1" Text="{Binding id_pstion, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="pstion_nColumn" Header="Наименование должности" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding pstion_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="slryColumn" Header="Зарплата" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding slry, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="rspnsColumn" Header="Обязанности" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding rspns, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="rqrmntsColumn" Header="Требования" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding rqrmnts, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="records" Header="Записи">
+                            <Grid x:Name="record_grid" Background="#FFE5E5E5" DataContext="{StaticResource gnrsViewSource}">
+                                <ListView x:Name="cmpstnListView" ItemsSource="{Binding Source={StaticResource cmpstnViewSource}}" Margin="0,0,0,70" SelectionMode="Single">
+                                    <ListView.ItemContainerStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="id_cmpstnColumn" Header="Код записи" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="6,-1,-6,-1" Text="{Binding id_cmpstn, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="cmpstn_nColumn" Header="Наименование записи" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding cmpstn_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="id_mscnColumn" Header="исполнитель" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1"  DataContext="{StaticResource mscnViewSource }" Text="{Binding mscn_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="albumColumn" Header="Альбом" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding album, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="yearColumn" Header="Год" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding year, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="id_gnrColumn" Header="Жанр" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" DataContext="{StaticResource gnrsViewSource}" Text="{Binding gnr_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="rec_dateColumn" Header="Дата записи" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DatePicker Margin="-6,-1" SelectedDate="{Binding rec_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="lenghtColumn" Header="Продолжительность" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding lenght, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="ratingColumn" Header="Рейтинг" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding rating, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="genres" Header="Жанры">
+                            <Grid x:Name="genres_grid" Background="#FFE5E5E5" DataContext="{StaticResource gnrsViewSource}">
+                                <ListView x:Name="gnrsListView" ItemsSource="{Binding}" Margin="0,0,0,77" SelectionMode="Single">
+                                    <ListView.ItemContainerStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="id_gnrColumn1" Header="Код жанра" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="6,-1,-6,-1" Text="{Binding id_gnr, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="gnr_nColumn" Header="Наименование жанра" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding gnr_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="gnr_abtColumn" Header="О жанре" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding gnr_abt, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="musicians" Header="Исполнители">
+                            <Grid x:Name="musicians_grid" Background="#FFE5E5E5" DataContext="{StaticResource mscnViewSource}">
+                                <ListView x:Name="mscnListView" ItemsSource="{Binding}" Margin="0,0,0,62" SelectionMode="Single">
+                                    <ListView.ItemContainerStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="id_mscnColumn1" Header="Код исполнителя" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="6,-1,-6,-1" Text="{Binding id_mscn, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="mscn_nColumn" Header="Исполнитель" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding mscn_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="abtColumn" Header="О исполнителе" Width="80">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding abt, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="grafik" Header="График работы">
+                            <Grid x:Name="grafik_grid" Background="#FFE5E5E5" DataContext="{StaticResource schdlViewSource}">
+                                <ListView x:Name="schdlListView" ItemsSource="{Binding}" Margin="0,0,0,56" SelectionMode="Single">
+                                    <ListView.ItemContainerStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn x:Name="dateColumn" Header="Дата" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <DatePicker Margin="6,-1,-6,-1" SelectedDate="{Binding date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="id_empColumn1" Header="Сотрудник" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" DataContext="{StaticResource empViewSource}" Text="{Binding fn, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="time_1Column" Header="Время 1" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding time_1, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="id_cmpstn_1Column" Header="Запись 1" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" DataContext="{StaticResource cmpstnViewSource}" Text="{Binding cmpstn_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="time_2Column" Header="Время 2" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding time_2, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="id_cmpstn_2Column" Header="Запись 2" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" DataContext="{StaticResource cmpstnViewSource}" Text="{Binding cmpstn_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="time_3Column" Header="Время 3" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" Text="{Binding time_3, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn x:Name="id_cmpstn_3Column" Header="Запись 3" Width="Auto">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Margin="-6,-1" DataContext="{StaticResource cmpstnViewSource}" Text="{Binding cmpstn_n, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Запросы" x:Name="Tab_Quest">
+                <Grid Background="#FFE5E5E5">
+                    <TabControl HorizontalAlignment="Left" Height="419" VerticalAlignment="Top" Width="792" x:Name="Child_Tab_Quest">
+                        <TabItem Header="Музыкальный архив">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                        <TabItem Header="Отдел кадров">
+                            <Grid Background="#FFE5E5E5">
+                                <DataGrid>
+
+                                </DataGrid>
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Сетка Вещания">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Фильтры" Name="Filtrs">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
